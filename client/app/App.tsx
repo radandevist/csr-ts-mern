@@ -4,7 +4,7 @@ import myImage from "../public/images/test_image.png";
 const App = () => {
   return (
     <div>
-      <h1>Holla!!!! dude</h1>
+      <h1>Holla!!!! dude ok</h1>
       <img src={myImage}/>
     </div>
   );

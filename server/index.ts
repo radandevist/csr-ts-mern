@@ -24,5 +24,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(3009, () => {
-  console.info("Running on port 3009, aaahem hum");
+  console.info("Running on port 3009, bouuia!");
 });

@@ -8,7 +8,7 @@ const nodeExternals = require('webpack-node-externals');
 // const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 // const startServerPlugin = require('start-server-webpack-plugin');
 
-// const NodemonPlugin = require('nodemon-webpack-plugin');
+const NodemonPlugin = require('nodemon-webpack-plugin');
 
 const common = require('./webpack.common');
 
@@ -36,14 +36,14 @@ module.exports = merge(common, {
     // }),
     // new webpack.NamedModulesPlugin(),
     new webpack.HotModuleReplacementPlugin(),
-    // new NodemonPlugin({
+    new NodemonPlugin({
       // If using more than one entry, you can specify
       // which output file will be restarted.
       // script: path.join(CURRENT_WORKING_DIR, 'dist/server/server.bundle.js'),
       // What to watch.
       // watch: path.join(CURRENT_WORKING_DIR, 'dist'),
       // Detailed log.
-      // verbose: true,
-    // })
+      verbose: true,
+    })
   ],
 });
