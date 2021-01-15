@@ -1,7 +1,19 @@
 import express from "express";
 import path from "path";
+import { webpack } from "webpack";
+import webpackDevMiddleware from "webpack-dev-middleware";
+
+const config = require("../webpack/client/webpack.dev.js");
+
+const compiler = webpack(config);
 
 const app = express();
+
+app.use(
+    webpackDevMiddleware(compiler, {
+      publicPath: config.output.publicPath,
+    }),
+);
 
 const CURRENT_WORKING_DIR = process.cwd();
 
@@ -12,5 +24,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(3009, () => {
-  console.info("Running on port 3009, hum");
+  console.info("Running on port 3009, aaahem hum");
 });
