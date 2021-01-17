@@ -1,9 +1,8 @@
 /* eslint-disable */
 'use strict';
-
 const path = require('path');
 const merge = require('webpack-merge');
-const { ids } = require('webpack');
+const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -12,13 +11,13 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CompressionPlugin = require('compression-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
   .BundleAnalyzerPlugin;
-
 const common = require('./webpack.common');
 
 const CURRENT_WORKING_DIR = process.cwd();
 
 module.exports = merge(common, {
   mode: 'production',
+  entry: [path.join(CURRENT_WORKING_DIR, 'client/app/index.tsx')],
   output: {
     path: path.join(CURRENT_WORKING_DIR, '/dist/client'),
     filename: 'js/[name].[chunkhash].js',
@@ -49,32 +48,10 @@ module.exports = merge(common, {
           {
             loader: 'css-loader',
             options: {
-              localsConvention: 'camelCase',
-              modules: {
-                localIdentName: '[local]___[hash:base64:5]',
-              },
             },
           },
           {
             loader: 'postcss-loader',
-          },
-        ],
-      },
-      {
-        test: /\.less$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-          },
-          {
-            loader: 'postcss-loader',
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              javascriptEnabled: true,
-            },
           },
         ],
       },
@@ -113,6 +90,18 @@ module.exports = merge(common, {
           },
         ],
       },
+    ],
+  },
+  resolve: {
+    extensions: [
+      '.ts',
+      '.tsx',
+      '.js',
+      '.json',
+      '.css',
+      '.scss',
+      '.less',
+      '.html',
     ],
   },
   performance: {
@@ -162,6 +151,7 @@ module.exports = merge(common, {
     ],
   },
   plugins: [
+    // new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(CURRENT_WORKING_DIR, 'client/public/index.html'),
       excludeChunks: ['server'],
@@ -180,7 +170,7 @@ module.exports = merge(common, {
       },
     }),
     new MiniCssExtractPlugin({
-      filename: 'css/[name].[hash].css',
+      filename: 'css/[name].[fullhash].css',
     }),
     new WebpackPwaManifest({
       name: 'MERN Boilerplate',
@@ -218,7 +208,7 @@ module.exports = merge(common, {
       threshold: 10240,
       minRatio: 0.8,
     }),
-    new ids.HashedModuleIdsPlugin(
+    new webpack.ids.HashedModuleIdsPlugin(
       {
         hashFunction: 'sha256',
         hashDigest: 'hex',

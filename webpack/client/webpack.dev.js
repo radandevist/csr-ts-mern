@@ -1,22 +1,22 @@
 /* eslint-disable */
 'use strict';
-
 const path = require('path');
 const webpack = require('webpack');
 const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
-
 const common = require('./webpack.common');
 
 const CURRENT_WORKING_DIR = process.cwd();
-// const PORT = process.env.PORT || 3000;
 
 module.exports = merge(common, {
   mode: 'development',
+  entry: [
+    'webpack-hot-middleware/client?reload=true',
+    path.join(CURRENT_WORKING_DIR, 'client/app/index.tsx')
+  ],
   output: {
     path: path.join(CURRENT_WORKING_DIR, '/dist/client'),
-    filename: '[name].js',
+    filename: 'js/[name].js',
     publicPath: '/',
   },
   devtool: 'eval-cheap-module-source-map',
@@ -54,40 +54,11 @@ module.exports = merge(common, {
             loader: 'css-loader',
             options: {
               sourceMap: true,
-              localsConvention: 'camelCase',
-              modules: {
-                localIdentName: '[local]___[hash:base64:5]',
-              },
             },
           },
           {
             loader: 'postcss-loader',
             options: {
-              sourceMap: true,
-            },
-          },
-        ],
-      },
-      {
-        test: /\.less$/,
-        use: [
-          'style-loader',
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-            },
-          },
-          {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
-            },
-          },
-          {
-            loader: 'less-loader',
-            options: {
-              javascriptEnabled: true,
               sourceMap: true,
             },
           },
@@ -127,36 +98,27 @@ module.exports = merge(common, {
       },
     ],
   },
+  resolve: {
+    extensions: [
+      '.ts',
+      '.tsx',
+      '.js',
+      '.json',
+      '.css',
+      '.scss',
+      '.less',
+      '.html',
+    ],
+    alias: {
+      'react-dom': '@hot-loader/react-dom'
+    },
+  },
   plugins: [
-    // new ForkTsCheckerWebpackPlugin({
-    //   tsconfig: path.join(CURRENT_WORKING_DIR, 'client/tsconfig.json'),
-    //   eslint: true,
-    // }),
+    new webpack.NoEmitOnErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
       template: path.join(CURRENT_WORKING_DIR, 'client/public/index.html'),
       inject: true,
     }),
-  ],
-  // devServer: {
-  //   port: 5000,
-  //   open: true,
-  //   inline: true,
-  //   compress: true,
-  //   noInfo: false,
-  //   hot: true,
-  //   disableHostCheck: false,
-  //   historyApiFallback: true,
-  //   stats: {
-  //     colors: true,
-  //     hash: false,
-  //     timings: true,
-  //     chunks: false,
-  //     chunkModules: false,
-  //     modules: false,
-  //   },
-  //   proxy: {
-  //     '/api': `http://localhost:${PORT}`,
-  //   },
-  // },
+  ]
 });
