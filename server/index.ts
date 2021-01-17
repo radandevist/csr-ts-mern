@@ -1,5 +1,6 @@
 import express from "express";
 import path from "path";
+import config from "../config/config";
 // ! comment these lines for production
 import devBundle from "./devBundle";
 // ! ==========
@@ -20,8 +21,6 @@ app.get("/", (req, res) => {
       .sendFile(path.join(CURRENT_WORKING_DIR, "dist/client/index.html"));
 });
 
-const port = 3898;
-
-app.listen(port, () => {
-  console.info(`Started at port ${port}, bouuia!`);
+app.listen(config.port, () => {
+  console.info(`Started at port ${config.port}, bouuia!`);
 });
