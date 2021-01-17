@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "echo dev",
+    "dev": "npm run dev:serve:watch",
+    "build": "npm run prod:build:client && npm run prod:build:server",
+    "start": "npm run start:server",
     "start:server": "node dist/server/server.bundle.js",
     "dev:serve:watch": "webpack --watch --config=./webpack/server/webpack.dev.js",
     "dev:build:server": "webpack --config=./webpack/server/webpack.dev.js",
@@ -12,7 +14,7 @@
     "dev:start:server": "npm run dev:build:server && npm run start:server",
     "prod:build:server": "webpack --config=./webpack/server/webpack.prod.js",
     "prod:build:client": "webpack --config=./webpack/client/webpack.prod.js",
-    "prod:start:server": "npm run prod:build:client && npm run prod:build:server && npm run start:server"
+    "prod:start:server": "npm run build && npm run start:server"
   },
   "dependencies": {
     "express": "^4.17.1",
