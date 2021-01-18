@@ -1,8 +1,21 @@
 {
-  "name": "my-mern",
+  "name": "csr-ts-mern",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "A MERN Stack boilerplate using typescript and webpack wiht client-side rendered react",
+  "author": "Andrianarisoa Daniel",
   "license": "MIT",
+  "keywords": [
+    "react",
+    "express",
+    "mongodb",
+    "node",
+    "mern"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shamahoque/mern-skeleton"
+  },
+  "main": "./dist/server/server.bundle.js",
   "scripts": {
     "dev": "npm run dev:serve:watch",
     "build": "npm run prod:build:client && npm run prod:build:server",
