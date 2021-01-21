@@ -6,7 +6,7 @@ import myImage from "../../../public/images/test_image.png";
 const Home = (): JSX.Element => {
   return (
     <div>
-      <h1 className="test">Welcome to our basic react app</h1>
+      <h1 className="test-dash">Welcome to our basic react app</h1>
       <img src={myImage}/>
     </div>
   );

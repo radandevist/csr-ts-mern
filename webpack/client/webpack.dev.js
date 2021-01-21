@@ -24,6 +24,7 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.(scss|sass)$/,
+        exclude: /\.module\.(sa|sc)ss$/,
         use: [
           'style-loader',
           {
@@ -48,6 +49,7 @@ module.exports = merge(common, {
       },
       {
         test: /\.css$/,
+        exclude: /\.module.css$/,
         use: [
           'style-loader',
           {
@@ -63,6 +65,35 @@ module.exports = merge(common, {
             },
           },
         ],
+      },
+      {
+        test: /\.module\.(sa|sc|c)ss$/,
+        use: [
+          'style-loader',
+          {
+            loader: 'css-loader',
+            options: {
+            modules: {
+              // namedExport: true,
+              exportLocalsConvention: "camelCase",
+              localIdentName: '[path][name]__[local]',
+            },
+            sourceMap: true,
+            }
+          },
+          {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+          {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+            },
+          },
+        ]
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|ico)$/,

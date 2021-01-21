@@ -28,6 +28,7 @@ module.exports = merge(common, {
     rules: [
       {
         test: /\.(scss|sass)$/,
+        exclude: /\.module\.(sa|sc)ss$/,
         use: [
           MiniCssExtractPlugin.loader,
           {
@@ -43,17 +44,37 @@ module.exports = merge(common, {
       },
       {
         test: /\.css$/,
+        exclude: /\.module.css$/,
         use: [
-          'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
-            options: {
-            },
           },
           {
             loader: 'postcss-loader',
           },
         ],
+      },
+      {
+        test: /\.module\.(sa|sc|c)ss$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                // namedExport: true,
+                exportLocalsConvention: "camelCase",
+              },
+            }
+          },
+          {
+            loader: 'postcss-loader',
+          },
+          {
+            loader: 'sass-loader',
+          },
+        ]
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|ico)$/,
@@ -62,7 +83,7 @@ module.exports = merge(common, {
             loader: 'file-loader',
             options: {
               outputPath: 'images',
-              publicPath: 'images',
+              publicPath: '/images',
               name: '[name].[hash].[ext]',
             },
           },
@@ -75,7 +96,7 @@ module.exports = merge(common, {
             loader: 'file-loader',
             options: {
               outputPath: 'fonts',
-              publicPath: 'fonts',
+              publicPath: '/fonts',
               name: '[name].[hash].[ext]',
             },
           },
