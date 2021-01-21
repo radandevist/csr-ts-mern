@@ -15,7 +15,7 @@ const CURRENT_WORKING_DIR = process.cwd();
 
 app.use("/", express.static(path.join(CURRENT_WORKING_DIR, "dist/client")));
 
-app.get("/", (req, res) => {
+app.get("*", (req, res) => {// ? is this correct beside the future api routes?
   res
       .status(200)
       .sendFile(path.join(CURRENT_WORKING_DIR, "dist/client/index.html"));

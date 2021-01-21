@@ -1,19 +1,25 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { hot } from "react-hot-loader";
-import myImage from "../public/images/test_image.png";
+import AppBar from "./components/Appbar/Appbar";
+import Home from "./pages/Home/Home";
+import NameForm from "./pages/NameForm/NameForm";
 
 import "./App.css";
 import "./App.scss";
 
 const App = () => {
   return (
-    <div>
-      <h1 className="test">Holla!!!! jhjho</h1>
-      <img src={myImage}/>
-    </div>
+    <>
+      <Router>
+        <AppBar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/form" component={NameForm} />
+        </Switch>
+      </Router>
+    </>
   );
 };
 
 export default hot(module)(App);
-// export default hot(App);
-// export default App;

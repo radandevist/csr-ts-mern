@@ -10,6 +10,7 @@ const compile = (app: Application): void => {
     const compiler = webpack(webpackDevClientconfig);
     const middleWare = webpackDevMiddleware(compiler, {
       publicPath: webpackDevClientconfig.output.publicPath,
+      // writeToDisk: true,
     });
 
     app.use(middleWare);

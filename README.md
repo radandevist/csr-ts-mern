@@ -54,4 +54,10 @@ Mohamed Samara](https://github.com/mohamedsamara)
 
 [ ] Remove the unused dependencies.
 
+[ ] Connection to databse.
+
+[ ]  CRUD Api routes with Authentication and role based authorizations
+
+[ ] React setup.
+
 [ ] idk
