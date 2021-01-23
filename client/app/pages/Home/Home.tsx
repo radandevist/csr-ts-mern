@@ -1,14 +1,32 @@
 import React from "react";
-import myImage from "../../../public/images/test_image.png";
+import useStyles from "./Home.style";
+import { Card, Typography, CardMedia, CardContent } from "@material-ui/core";
+
+// eslint-disable-next-line max-len
+import unicornImage from "../../../public/images/meritt-thomas-KTYjVDmN4A4-unsplash.jpg";
 
 // type HomeProps = {}
 
 const Home = (): JSX.Element => {
+  const classes = useStyles();
+
   return (
-    <div>
-      <h1 className="test-dash">Welcome to our basic react app</h1>
-      <img src={myImage}/>
-    </div>
+    <Card className={classes.card}>
+      <Typography variant="h6" className={classes.title} >
+        Home Page
+      </Typography>
+      <CardMedia
+        className={classes.media}
+        image={unicornImage}
+        title="A fantasy unicorn"
+      />
+      {/* <span>Photo by <a href="https://unsplash.com/@merittthomas?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Meritt Thomas</a> on <a href="https://unsplash.com/s/photos/unicorn?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span> */}
+      <CardContent>
+        <Typography variant="body2" component="p">
+          Welcome to This MERN Boilerplate
+        </Typography>
+      </CardContent>
+    </Card>
   );
 };
 

@@ -1,9 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { hot } from "react-hot-loader";
-import AppBar from "./components/Appbar/Appbar";
-import Home from "./pages/Home/Home";
-import NameForm from "./pages/NameForm/NameForm";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { BrowserRouter } from "react-router-dom";
+// import { CssBaseline } from "@material-ui/core";
+import MainRouter from "./MainRouter";
+import theme from "./theme";
 
 import "./App.css";
 import "./App.scss";
@@ -11,13 +12,12 @@ import "./App.scss";
 const App = () => {
   return (
     <>
-      <Router>
-        <AppBar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/form" component={NameForm} />
-        </Switch>
-      </Router>
+      <BrowserRouter>
+        <ThemeProvider theme={theme}>
+          {/* <CssBaseline/> */}
+          <MainRouter/>
+        </ThemeProvider>
+      </BrowserRouter>
     </>
   );
 };
