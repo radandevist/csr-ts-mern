@@ -1,17 +1,22 @@
 import path from "path";
 import express, { Application } from "express";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser";
+import compress from "compression";
+import cors from "cors";
+import helmet from "helmet";
 import config from "../config/config";
-// ! Optional: comment out this line in production for a better bundle
-import { compile } from "./devBundle";
+import ApiRoutes from "./routes/api";
+import ClientRoutes from "./routes/client";
+import devBundle from "./devBundle";// ! comment out this line in production
 
-const CURRENT_WORKING_DIR = process.cwd();
+const CWD = process.cwd(); // current working directory
 
 /**
  * Main Application class
  */
 class MainApp {
-  public app: Application = express();
+  private app: Application = express();
 
   public PORT: Number = Number(config.port) || 3000;
 
@@ -19,55 +24,52 @@ class MainApp {
     config.database.mongodb.url.dev :
     config.database.mongodb.url.prod;
 
+  // private mongoUri: string = config.database.mongodb.url.dev;
+
   // eslint-disable-next-line require-jsdoc
   constructor() {
-    if (config.env == "development") {
-      this.compileClientBundle();
-    }
-
-    this.mongoDatabase();
-
-    this.serveStaticFiles();
-
+    this.middlewares();
     this.routes();
+    this.mongoDatabase();
   }
 
   /**
-   * webpack dev middleware for the frontend
+   * Set up all middleware
+   * @return {void}
    */
-  public compileClientBundle(): void {
-    // ! Optional: comment out this line in production for a better bundle
-    compile(this.app);
-  }
+  private middlewares(): void {
+    // Bundle the client code
+    devBundle.compile(this.app);// ! comment out this line in production
 
-  /**
-   * Serve the static files
-   */
-  public serveStaticFiles(): void {
-    this.app.use(
-        "/",
-        express.static(path.join(CURRENT_WORKING_DIR, "dist/client")),
-    );
+    // enable serving static files
+    this.app.use("/", express.static(path.join(CWD, "dist/client")));
+
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.use(cookieParser());
+    this.app.use(compress());
+
+    // secure apps by setting various HTTP headers
+    this.app.use(helmet());
+
+    // enable CORS - Cross Origin Resource Sharing
+    this.app.use(cors());
   }
 
   /**
    * Routes definition
    */
   public routes(): void {
-    // ? is this correct beside the future api routes?
-    this.app.get("*", (req, res) => {
-      res
-          .status(200)
-          .sendFile(path.join(CURRENT_WORKING_DIR, "dist/client/index.html"));
-    });
+    this.app.use(ClientRoutes.prefixPath, ClientRoutes.getRouter());
+    this.app.use(ApiRoutes.prefixPath, ApiRoutes.getRouter());
   }
 
   /**
    * Connection to  mongodb
    */
-  async mongoDatabase(): Promise<void> {
+  private mongoDatabase(): void {
     try {
-      await mongoose.connect(
+      mongoose.connect(
           this.mongoUri,
           {
             useNewUrlParser: true,

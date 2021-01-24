@@ -56,14 +56,25 @@ Mohamed Samara](https://github.com/mohamedsamara)
 
 As a covention, css/sass/scss modules are prefixed by `.module.(css|sass|scss)` extension. and for typescript needs we must add a corresponding declaration file. i.e. : if i create a css module named `foo.module.css` thus a file named `foo.module.css.d.ts` have to be created also (same logic for sass and scss).
 
+### creating a new page/view (client):
+
+* create the react component of your new page
+
+* insert a new `ClientRoute` instance in `clientRoutes` array inside `client/app/routes.ts`. This one is for react routing on the client-side.
+
+* insert the new page's path (a string) in the `clientRoutes` array inside `server/routes/react/routes.ts`. This one is for the express routing on the server. Otherwise, express will not recognize your page's path and will throw you an error which will tell you it can't get that url.
+Make sure that it matches the path you entered in `client/app/routes.ts` previously.
+
+
+
 ## Todo next:
 
 [ ] Remove the unused dependencies.
 
-[ ] Connection to databse.
+[x] Connection to database.
 
-[ ]  CRUD Api routes with Authentication and role based authorizations
+[ ] functionning CRUD Api routes with Authentication and role based authorizations
 
-<!-- [X] React setup. -->
+<!-- [ ] A file containing the frontend routes shared both by express router and react router -->
 
 [ ] idk
