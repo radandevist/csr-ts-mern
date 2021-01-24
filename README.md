@@ -64,6 +64,6 @@ As a covention, css/sass/scss modules are prefixed by `.module.(css|sass|scss)` 
 
 [ ]  CRUD Api routes with Authentication and role based authorizations
 
-[ ] React setup.
+<!-- [X] React setup. -->
 
 [ ] idk

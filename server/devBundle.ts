@@ -5,7 +5,7 @@ import webpackHotMiddleware from "webpack-hot-middleware";
 import config from "../config/config";
 const webpackDevClientconfig = require("../webpack/client/webpack.dev.js");
 
-const compile = (app: Application): void => {
+export const compile = (app: Application): void => {
   if (config.env == "development") {
     const compiler = webpack(webpackDevClientconfig);
     const middleWare = webpackDevMiddleware(compiler, {
