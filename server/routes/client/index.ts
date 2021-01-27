@@ -1,5 +1,6 @@
 import { Request, Response, Router } from "express";
 import path from "path";
+import routes from "./routes";
 
 const CWD = process.cwd(); // current working directory
 
@@ -7,10 +8,6 @@ const CWD = process.cwd(); // current working directory
  * All routes that should be rendered by react
  */
 class ClientRoutes {
-  // eslint-disable-next-line max-len
-  // TODO: move these routes on a separate file shared by both react-router and express router
-  private arrayRoutes = ["/", "/form"];
-
   public static prefixPath: string = "/";
 
   // eslint-disable-next-line new-cap
@@ -33,7 +30,7 @@ class ClientRoutes {
    * @return {void}
    */
   private routes(): void {
-    this.arrayRoutes.forEach((route) => {
+    routes.forEach((route) => {
       this.router.get(route, this.sendTemplate);
     });
   }
