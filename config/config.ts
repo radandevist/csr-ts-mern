@@ -9,7 +9,7 @@ const config = {
     mongodb: {
       url: {
         dev: `mongodb://localhost:27017/${sensitive.dbName}`,
-        prod: `mongodb+srv://radandevist:${sensitive.dbPassword}@cluster0.ac2tb.mongodb.net/${sensitive.dbName}?retryWrites=true&w=majority`,
+        prod: `mongodb+srv://${sensitive.dbUser}:${sensitive.dbPassword}@cluster0.ac2tb.mongodb.net/${sensitive.dbName}?retryWrites=true&w=majority`,
       },
     },
   },
