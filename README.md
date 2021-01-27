@@ -15,6 +15,11 @@ This is a MERN boilerplate which uses typescript and webpack.  The resulting rea
 
 ## Usage:
 
+* prerequisites:
+
+  * Node
+  * MongoDB
+
 * development:
 
   * uncomment the following lines of code in `server/index.ts`: 
@@ -65,7 +70,13 @@ As a covention, css/sass/scss modules are prefixed by `.module.(css|sass|scss)` 
 * insert the new page's path (a string) in the `clientRoutes` array inside `server/routes/react/routes.ts`. This one is for the express routing on the server. Otherwise, express will not recognize your page's path and will throw you an error which will tell you it can't get that url.
 Make sure that it matches the path you entered in `client/app/routes.ts` previously.
 
+### about connecting to mongodb:
 
+You will need **MongoDB** installed on your machine for local development.
+
+The mongo uri in our [config file](https://github.com/radandevist/csr-ts-mern/blob/master/config/config.ts) is best suited for [mongoDB Atlas](https://www.mongodb.com/cloud), to continue with this config you'll need to register an account there.
+
+Althought, you're free to use any mongo host or any database management system also. 
 
 ## Todo next:
 
