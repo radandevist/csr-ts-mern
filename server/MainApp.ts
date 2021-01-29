@@ -20,9 +20,7 @@ class MainApp {
 
   public PORT: Number = Number(config.port) || 3000;
 
-  private mongoUri: string = (config.env == "development") ?
-    config.database.mongodb.url.dev :
-    config.database.mongodb.url.prod;
+  private mongoUri: string = config.db.mongoUri;
 
   // private mongoUri: string = config.database.mongodb.url.dev;
 
