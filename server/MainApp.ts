@@ -26,9 +26,10 @@ class MainApp {
 
   // eslint-disable-next-line require-jsdoc
   constructor() {
+    this.mongoDatabase();
+    // * Be aware of the order, this is important
     this.middlewares();
     this.routes();
-    this.mongoDatabase();
   }
 
   /**

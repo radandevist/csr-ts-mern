@@ -1,13 +1,13 @@
 import { Router } from "express";
-import UsersController from "../../controllers/users.controller";
+import TutorialsController from "../../controllers/tutorials.controller";
 
-const usersController = new UsersController();
+const tutorialsController = new TutorialsController();
 
 /**
- * Users CRUD endpoints
+ * Tutorials CRUD endpoints
  */
-class UserRoutes {
-  public static prefixPath: string = "/users";
+class TutorialsRoutes {
+  public static prefixPath: string = "/tutorials";
 
   // eslint-disable-next-line new-cap
   private router: Router = Router();
@@ -22,7 +22,7 @@ class UserRoutes {
    */
   private routes(): void {
     this.getAll();
-    // this.create();
+    this.create();
     // this.getOne();
     // this.update();
     // this.delete();
@@ -33,18 +33,24 @@ class UserRoutes {
    * @return {Router}
    */
   public static getRouter(): Router {
-    const instance = new UserRoutes();
+    const instance = new TutorialsRoutes();
     return instance.router;
   }
 
   /**
-   * Index route for {...}/users path
-   * Get a list of users
+   * Index route for {...}/tutorials path
    * @return {void}
    */
   private getAll(): void {
-    this.router.get("/", usersController.getAll);
+    this.router.get("/", tutorialsController.getAll);
+  }
+
+  /**
+   * @return {void}
+   */
+  private create(): void {
+    this.router.post("/", tutorialsController.create);
   }
 }
 
-export default UserRoutes;
+export default TutorialsRoutes;
