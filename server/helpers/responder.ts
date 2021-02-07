@@ -1,5 +1,11 @@
 import { Response } from "express";
 
+interface Result {
+  status: string;
+  message: string | Array<string>;
+  data?: any
+};
+
 /**
  * [Description Responder]
  */
@@ -8,7 +14,7 @@ class Responder {
 
   private code!: number;
 
-  private message!: string | Array<String>;
+  private message!: string | Array<string>;
 
   private data: any = null;
 
@@ -20,7 +26,7 @@ class Responder {
    */
   public async success(
       code: number,
-      message: string | Array<String>,
+      message: string | Array<string>,
       data?: any): Promise<void> {
     this.type = "success";
     this.code = code;
@@ -35,7 +41,7 @@ class Responder {
    */
   public async error(
       code: number,
-      message: string | Array<String>): Promise<void> {
+      message: string | Array<string>): Promise<void> {
     this.type = "error";
     this.code = code;
     this.message = message;
@@ -46,7 +52,7 @@ class Responder {
    * @return {Promise<void>}
    */
   public async send(res: Response): Promise<void> {
-    let result: object;
+    let result: Result;
 
     if (this.type === "success") {
       result = {

@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { isValidObjectId } from "mongoose";
 import Responder from "../helpers/responder";
 import TutorialsModel, { ITutorials } from "../models/tutorials.model";
 import TutorialsValidator from "../validators/tutorials.validator";
@@ -20,7 +21,6 @@ class TutorialsController {
    * @return {Promise<void>}
    */
   public async getAll(req: Request, res: Response): Promise<void> {
-    // res.status(200).send({ message: "this is the list of all tutorials" });
     try {
       const _tutorials: Array<ITutorials> = await Tutorials.find();
 
@@ -32,10 +32,34 @@ class TutorialsController {
         responder.send(res);
       }
     } catch (err) {
-      res.status(200).send({
-        type: "error",
-        message: `${err.message} in ${err.file} at ${err.line}`,
-      });
+      responder.error(400, err.message);
+      responder.send(res);
+    }
+  }
+
+  /**
+   * @param  {Request} req
+   * @param  {Response} res
+   * @return {Promise<void>}
+   */
+  public async getByID(req: Request, res: Response): Promise<void> {
+    try {
+      const _id = req.params.id;
+
+      const _tutorial = (isValidObjectId(_id)) ?
+      await Tutorials.findById(_id) :
+      null;
+
+      if (_tutorial) {
+        responder.success(200, `tutorial with id ${_id} found`, _tutorial);
+        responder.send(res);
+      } else {
+        responder.error(400, `couldn't find tutorial with id ${_id}`);
+        responder.send(res);
+      }
+    } catch (err) {
+      responder.error(400, err.message);
+      responder.send(res);
     }
   }
 
@@ -47,10 +71,10 @@ class TutorialsController {
   public async create(req: Request, res: Response): Promise<void> {
     try {
       // * validation
-      const { error, value } = tutorialsValidator
+      const { error: validationError, value } = tutorialsValidator
           .createValidation(req.body);
 
-      if (!error) {
+      if (!validationError) {
         // * Two different ways of creating a tutorial
         // const createdTutorial = await Tutorials.create(value);// * #1
         const createdTutorial = await new Tutorials(value).save(); // * #2
@@ -59,7 +83,7 @@ class TutorialsController {
         responder.send(res);
       } else {
         const _err = [];
-        for (const e of error.details) {
+        for (const e of validationError.details) {
           _err.push(e.message);
         }
 
@@ -67,10 +91,8 @@ class TutorialsController {
         responder.send(res);
       }
     } catch (err) {
-      res.status(200).send({
-        type: "error",
-        message: err.message,
-      });
+      responder.error(400, err.message);
+      responder.send(res);
     }
   }
 }
