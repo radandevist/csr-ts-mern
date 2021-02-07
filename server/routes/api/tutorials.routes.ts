@@ -24,7 +24,7 @@ class TutorialsRoutes {
     this.getAll();
     this.create();
     this.getByID();
-    // this.update();
+    this.updateByID();
     // this.delete();
     // this.updatePassword();// ?
   }
@@ -57,6 +57,13 @@ class TutorialsRoutes {
    */
   private getByID(): void {
     this.router.get("/:id", tutorialsController.getByID);
+  }
+
+  /**
+   * @return {void}
+   */
+  private updateByID(): void {
+    this.router.put("/:id", tutorialsController.updateByID);
   }
 }
 

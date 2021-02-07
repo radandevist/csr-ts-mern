@@ -22,9 +22,9 @@ class TutorialsModel {
   // eslint-disable-next-line require-jsdoc
   private init(): void {
     const schemaDefinition = {
-      title: { type: String, required: true },
-      description: { type: String, required: true },
-      published: { type: Boolean, required: true },
+      title: { type: String, required: true, min: 5, max: 100 },
+      description: { type: String, required: true, min: 5, max: 255 },
+      published: { type: Boolean, required: true, default: false },
     };
     const schemaOptions: SchemaOptions = { timestamps: true };
 
