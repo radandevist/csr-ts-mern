@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { getValidationErrorMessages } from "../helpers/errorHandlers";
 import Responder from "../helpers/responder";
 import TutorialsModel, { ITutorials } from "../models/tutorials.model";
 import TutorialsValidator from "../validators/tutorials.validator";
@@ -79,12 +80,7 @@ class TutorialsController {
         responder.success(200, "Tutorial succesfully created", createdTutorial);
         responder.send(res);
       } else {
-        const _err = [];
-        for (const e of validationError.details) {
-          _err.push(e.message);
-        }
-
-        responder.error(400, _err);
+        responder.error(400, getValidationErrorMessages(validationError));
         responder.send(res);
       }
     } catch (err) {
@@ -119,12 +115,7 @@ class TutorialsController {
           responder.success(200, "Tutorial updated", data);
           responder.send(res);
         } else {
-          const _err = [];
-          for (const e of validationError.details) {
-            _err.push(e.message);
-          }
-
-          responder.error(400, _err);
+          responder.error(400, getValidationErrorMessages(validationError));
           responder.send(res);
         }
       } else {
