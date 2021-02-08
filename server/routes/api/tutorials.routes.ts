@@ -22,8 +22,9 @@ class TutorialsRoutes {
    */
   private routes(): void {
     this.getAll();
+    this.getPublished();// * Be aware of the order of this method
+    this.getByID();// * and this one
     this.create();
-    this.getByID();
     this.updateByID();
     this.deleteByID();
     // this.updatePassword();// ?
@@ -71,6 +72,13 @@ class TutorialsRoutes {
    */
   private deleteByID(): void {
     this.router.delete("/:id", tutorialsController.deleteByID);
+  }
+
+  /**
+   * @return {void}
+   */
+  private getPublished(): void {
+    this.router.get("/published", tutorialsController.getPublished);
   }
 }
 

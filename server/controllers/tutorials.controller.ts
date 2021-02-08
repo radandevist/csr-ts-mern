@@ -22,10 +22,10 @@ class TutorialsController {
    */
   public async getAll(req: Request, res: Response): Promise<void> {
     try {
-      const _tutorials: Array<ITutorials> = await Tutorials.find();
+      const tutsFound: Array<ITutorials> = await Tutorials.find();
 
-      if (_tutorials.length > 0) {
-        responder.success(200, "successfully got tutorials list", _tutorials);
+      if (tutsFound.length > 0) {
+        responder.success(200, "successfully got tutorials list", tutsFound);
         responder.send(res);
       } else {
         responder.success(200, "No tutorials found");
@@ -44,15 +44,37 @@ class TutorialsController {
    */
   public async getByID(req: Request, res: Response): Promise<void> {
     try {
-      const _id = req.params.id;
+      const id = req.params.id;
 
-      const _tutorial = await Tutorials.findById(_id);
+      const tutFound = await Tutorials.findById(id);
 
-      if (_tutorial) {
-        responder.success(200, `tutorial with id ${_id} found`, _tutorial);
+      if (tutFound) {
+        responder.success(200, `tutorial with id ${id} found`, tutFound);
         responder.send(res);
       } else {
-        responder.error(400, `couldn't find tutorial with id ${_id}`);
+        responder.error(400, `couldn't find tutorial with id ${id}`);
+        responder.send(res);
+      }
+    } catch (err) {
+      responder.error(400, err.message);
+      responder.send(res);
+    }
+  }
+
+  /**
+   * @param  {Request} req
+   * @param  {Response} res
+   * @return {Promise<void>}
+   */
+  public async getPublished(req: Request, res: Response): Promise<void> {
+    try {
+      const tutsFound = await Tutorials.find({ published: true });
+
+      if (tutsFound.length > 0) {
+        responder.success(200, "Got all published tutorials", tutsFound);
+        responder.send(res);
+      } else {
+        responder.error(400, "there are no published tutorials");
         responder.send(res);
       }
     } catch (err) {
@@ -106,9 +128,10 @@ class TutorialsController {
 
         if (!validationError) {
           const log = await Tutorials.updateOne({ _id: id }, value);
+          const updatedTut = await Tutorials.findById(id);
 
           const data = {
-            updatedTut: foundTut,
+            updatedTut: updatedTut,
             log: log,
           };
 
