@@ -9,8 +9,11 @@ import config from "../config/config";
 import ApiRoutes from "./routes/api";
 import ClientRoutes from "./routes/client";
 import devBundle from "./devBundle";// ! comment out this line in production
+import RolesModel from "./models/roles.model";
 
 const CWD = process.cwd(); // current working directory
+
+const Roles = RolesModel.getModel();
 
 /**
  * Main Application class
@@ -76,10 +79,20 @@ class MainApp {
             useUnifiedTopology: true,
           },
       );
-
       console.info("Connected to the database");
+
+      // initial
+      // set essential documents collection
+      // ======
+      // set the primitive roles
+      // eslint-disable-next-line max-len
+      const primitiveRoles: Array<"user" | "moderator" | "admin"> = ["user", "moderator", "admin"];
+      for (const role of primitiveRoles) {
+        (!Roles.findOne({ name: role })) ? Roles.create({ name: role }) : {};
+      }
+      console.info("Primitives roles set");
     } catch (err) {
-      console.error(`A connection error occured:\n${err}`);
+      console.error(`A database error connection occured:\n${err}`);
     }
   }
 
