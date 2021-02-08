@@ -25,11 +25,11 @@ class TutorialsController {
 
       if (tutsFound.length > 0) {
         responder.success(200, "successfully got tutorials list", tutsFound);
-        responder.send(res);
       } else {
-        responder.success(200, "No tutorials found");
-        responder.send(res);
+        responder.success(200, "no tutorials found");
       }
+
+      responder.send(res);
     } catch (err) {
       responder.error(400, err.message);
       responder.send(res);
@@ -48,11 +48,11 @@ class TutorialsController {
 
       if (tutFound) {
         responder.success(200, "toutorial found", tutFound);
-        responder.send(res);
       } else {
         responder.error(400, "no tutorial with matching id");
-        responder.send(res);
       }
+
+      responder.send(res);
     } catch (err) {
       responder.error(400, err.message);
       responder.send(res);
@@ -71,11 +71,11 @@ class TutorialsController {
 
       if (tutsFound.length > 0) {
         responder.success(200, "Got all published tutorials", tutsFound);
-        responder.send(res);
       } else {
         responder.error(400, "there are no published tutorials");
-        responder.send(res);
       }
+
+      responder.send(res);
     } catch (err) {
       responder.error(400, err.message);
       responder.send(res);
@@ -101,11 +101,11 @@ class TutorialsController {
         const createdTutorial: ITutorials = await new Tutorials(value).save(); // * #2
 
         responder.success(200, "Tutorial succesfully created", createdTutorial);
-        responder.send(res);
       } else {
         responder.error(400, getValidationErrorMessages(validationError));
-        responder.send(res);
       }
+
+      responder.send(res);
     } catch (err) {
       responder.error(400, err.message);
       responder.send(res);
@@ -137,15 +137,14 @@ class TutorialsController {
           };
 
           responder.success(200, "Tutorial updated", data);
-          responder.send(res);
         } else {
           responder.error(400, getValidationErrorMessages(validationError));
-          responder.send(res);
         }
       } else {
         responder.error(400, "no tutorial with matching id found");
-        responder.send(res);
       }
+
+      responder.send(res);
     } catch (err) {
       responder.error(400, err.message);
       responder.send(res);
@@ -171,11 +170,11 @@ class TutorialsController {
         };
 
         responder.success(200, "tutorial deleted", data);
-        responder.send(res);
       } else {
         responder.error(400, "no tutorial with matching id found");
-        responder.send(res);
       }
+
+      responder.send(res);
     } catch (err) {
       responder.error(400, err.message);
       responder.send(res);

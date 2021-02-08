@@ -40,19 +40,17 @@ class AuthController {
             const createdUser = await Users.create(value);
 
             responder.success(200, "user registered", createdUser);
-            responder.send(res);
           } else {// * something that should never happen
             responder.error(400, `role ${value.role} does not exists`);
-            responder.send(res);
           }
         } else {
           responder.error(400, "email address already in use");
-          responder.send(res);
         }
       } else {
         responder.error(400, getValidationErrorMessages(validationError));
-        responder.send(res);
       }
+
+      responder.send(res);
     } catch (err) {
       responder.error(400, err.message);
       responder.send(res);
