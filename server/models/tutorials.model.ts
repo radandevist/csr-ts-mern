@@ -14,6 +14,8 @@ export interface ITutorialsModel {};// ? what is this?
 class TutorialsModel {
   private model!: Model<ITutorials>;
 
+  private static instance: TutorialsModel;
+
   // eslint-disable-next-line require-jsdoc
   public constructor() {
     this.init();
@@ -37,8 +39,11 @@ class TutorialsModel {
   /**
    * @return {Model<ITutorials>}
    */
-  public getModel(): Model<ITutorials> {
-    return this.model;
+  public static getModel(): Model<ITutorials> {
+    if (!this.instance) {
+      this.instance = new TutorialsModel();
+    }
+    return this.instance.model;
   }
 }
 

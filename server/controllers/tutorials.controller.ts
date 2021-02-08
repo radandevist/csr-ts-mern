@@ -4,8 +4,7 @@ import Responder from "../helpers/responder";
 import TutorialsModel, { ITutorials } from "../models/tutorials.model";
 import TutorialsValidator from "../validators/tutorials.validator";
 
-const tutorialsModel = new TutorialsModel();
-const Tutorials = tutorialsModel.getModel();
+const Tutorials = TutorialsModel.getModel();
 
 const tutorialsValidator = new TutorialsValidator();
 
