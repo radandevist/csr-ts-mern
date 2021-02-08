@@ -127,6 +127,37 @@ class TutorialsController {
       responder.send(res);
     }
   }
+
+  /**
+   * @param  {Request} req
+   * @param  {Response} res
+   * @return {Promise<void>}
+   */
+  public async deleteByID(req: Request, res: Response): Promise<void> {
+    try {
+      const id = req.params.id;
+
+      const tutFound = await Tutorials.findById(req.params.id);
+
+      if (tutFound) {
+        const log = await Tutorials.deleteOne({ _id: id });
+
+        const data = {
+          deletedTut: tutFound,
+          log: log,
+        };
+
+        responder.success(200, "tutorial deleted", data);
+        responder.send(res);
+      } else {
+        responder.error(400, "no tutorial with matching id found");
+        responder.send(res);
+      }
+    } catch (err) {
+      responder.error(400, err.message);
+      responder.send(res);
+    }
+  }
 }
 
 export default TutorialsController;

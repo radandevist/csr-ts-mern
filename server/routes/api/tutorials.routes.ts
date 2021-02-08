@@ -25,7 +25,7 @@ class TutorialsRoutes {
     this.create();
     this.getByID();
     this.updateByID();
-    // this.delete();
+    this.deleteByID();
     // this.updatePassword();// ?
   }
 
@@ -64,6 +64,13 @@ class TutorialsRoutes {
    */
   private updateByID(): void {
     this.router.put("/:id", tutorialsController.updateByID);
+  }
+
+  /**
+   * @return {void}
+   */
+  private deleteByID(): void {
+    this.router.delete("/:id", tutorialsController.deleteByID);
   }
 }
 
