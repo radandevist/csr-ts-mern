@@ -51,7 +51,8 @@ class Responder {
    * @param  {Response} res
    * @return {Promise<void>}
    */
-  public async send(res: Response): Promise<void> {
+  public async send(res: Response):
+    Promise<Response<any, Record<string, any>>> {
     let result: Result;
 
     if (this.type === "success") {
@@ -67,7 +68,8 @@ class Responder {
       };
     }
 
-    res.status(this.code).json(result);
+    // res.status(this.code).json(result);
+    return res.status(this.code).json(result);
   };
 }
 
