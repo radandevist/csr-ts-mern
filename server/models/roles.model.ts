@@ -1,8 +1,10 @@
 // eslint-disable-next-line max-len
 import mongoose, { Document, Model, Schema/* , SchemaOptions */ } from "mongoose";
 
+export type PrimitiveRoles = "user" | "moderator" | "admin";
+
 export interface IRoles extends Document {
-  name: "user" | "moderator" | "admin";
+  name: PrimitiveRoles;
 };
 
 export interface IRolesModel {};// ? what is this?

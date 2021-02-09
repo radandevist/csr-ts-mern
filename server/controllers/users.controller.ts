@@ -13,7 +13,7 @@ class UsersController {
   /**
    * @param  {Request} req
    * @param  {Response} res
-   * @return {void}
+   * @return {Promise<void>}
    */
   public async getAll(req: Request, res: Response): Promise<void> {
     try {
@@ -35,7 +35,7 @@ class UsersController {
   /**
    * @param  {Request} req
    * @param  {Response} res
-   * @return {void}
+   * @return {Promise<void>}
    */
   public async userBoard(req: Request, res: Response): Promise<void> {
     try {
@@ -51,11 +51,29 @@ class UsersController {
   /**
    * @param  {Request} req
    * @param  {Response} res
-   * @return {void}
+   * @return {Promise<void>}
    */
   public async moderatorBoard(req: Request, res: Response): Promise<void> {
     try {
-      responder.success(200, "This is the moderators board");
+      // eslint-disable-next-line max-len
+      responder.success(200, "This is the moderators board", { user: req.user });
+
+      responder.send(res);
+    } catch (err) {
+      responder.error(400, err.message);
+      responder.send(res);
+    }
+  }
+
+  /**
+   * @param  {Request} req
+   * @param  {Response} res
+   * @return {Promise<void>}
+   */
+  public async adminBoard(req: Request, res: Response): Promise<void> {
+    try {
+      // eslint-disable-next-line max-len
+      responder.success(200, "This is the admins board", { user: req.user });
 
       responder.send(res);
     } catch (err) {

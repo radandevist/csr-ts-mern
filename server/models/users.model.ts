@@ -3,7 +3,7 @@ import mongoose, { Document, Model, Schema, SchemaOptions } from "mongoose";
 export interface IUsers extends Document {
   userName: string,
   email: string,
-  role: string,
+  roleID: string,
 };
 
 export interface IUsersModel {};// ? what is this?
@@ -26,8 +26,7 @@ class UsersModel {
     const schemaDefinition = {
       userName: { type: String, required: true, minLength: 3, maxLength: 50 },
       email: { type: String, required: true, maxLength: 255 },
-      // eslint-disable-next-line max-len
-      role: { type: Schema.Types.ObjectId, ref: "Roles", required: true, default: "user" },
+      roleID: { type: Schema.Types.ObjectId, ref: "Roles", required: true },
     };
     const schemaOptions: SchemaOptions = { timestamps: true };
 

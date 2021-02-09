@@ -23,6 +23,7 @@ class AuthRoutes {
   private routes(): void {
     this.register();
     this.login();
+    this.logout();
   }
 
   /**
@@ -47,6 +48,14 @@ class AuthRoutes {
    */
   private login(): void {
     this.router.post("/login", authController.login);
+  }
+
+  /**
+   * Log out an user
+   * @return {void}
+   */
+  private logout(): void {
+    this.router.get("/logout", authController.logout);
   }
 }
 

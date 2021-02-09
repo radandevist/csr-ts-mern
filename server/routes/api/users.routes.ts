@@ -25,6 +25,8 @@ class UserRoutes {
   private routes(): void {
     this.getAll();
     this.userBoard();
+    this.moderatorBoard();
+    this.adminBoard();
     // this.create();
     // this.getOne();
     // this.update();
@@ -46,7 +48,12 @@ class UserRoutes {
    * @return {void}
    */
   private getAll(): void {
-    this.router.get("/", usersController.getAll);
+    this.router.get(
+        "/",
+        authController.verifyToken,
+        authController.isAdmin,
+        usersController.getAll,
+    );
   }
 
   /**
@@ -63,8 +70,8 @@ class UserRoutes {
   }
 
   /**
-   * User's board
-   * Only accessible to signed in users
+   * Moderators board
+   * Only accessible users with moderator role
    * @return {void}
    */
   private moderatorBoard(): void {
@@ -73,6 +80,20 @@ class UserRoutes {
         authController.verifyToken,
         authController.isModerator,
         usersController.moderatorBoard,
+    );
+  }
+
+  /**
+   * Adimins board
+   * Only accessible users with admin role
+   * @return {void}
+   */
+  private adminBoard(): void {
+    this.router.get(
+        "/adminboard",
+        authController.verifyToken,
+        authController.isAdmin,
+        usersController.adminBoard,
     );
   }
 }

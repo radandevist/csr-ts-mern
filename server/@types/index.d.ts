@@ -1,5 +1,4 @@
 /* eslint-disable no-unused-vars */
-
 import { IUsers } from "../models/users.model";
 
 declare global {

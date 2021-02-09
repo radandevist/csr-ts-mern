@@ -9,7 +9,7 @@ import config from "../config/config";
 import ApiRoutes from "./routes/api";
 import ClientRoutes from "./routes/client";
 import devBundle from "./devBundle";// ! comment out this line in production
-import RolesModel from "./models/roles.model";
+import RolesModel, { PrimitiveRoles } from "./models/roles.model";
 
 const CWD = process.cwd(); // current working directory
 
@@ -86,7 +86,7 @@ class MainApp {
       // ======
       // set the primitive roles
       // eslint-disable-next-line max-len
-      const primitiveRoles: Array<"user" | "moderator" | "admin"> = ["user", "moderator", "admin"];
+      const primitiveRoles: Array<PrimitiveRoles> = ["user", "moderator", "admin"];
       for (const role of primitiveRoles) {
         (!Roles.findOne({ name: role })) ? Roles.create({ name: role }) : {};
       }
