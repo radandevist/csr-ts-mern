@@ -22,7 +22,7 @@ class AuthRoutes {
    */
   private routes(): void {
     this.register();
-    // this.login();
+    this.login();
   }
 
   /**
@@ -34,12 +34,19 @@ class AuthRoutes {
   }
 
   /**
-   * Index route for {...}/users path
-   * Get a list of users
+   * Register an user
    * @return {void}
    */
   private register(): void {
     this.router.post("/register", authController.register);
+  }
+
+  /**
+   * Log in an user
+   * @return {void}
+   */
+  private login(): void {
+    this.router.post("/login", authController.login);
   }
 }
 

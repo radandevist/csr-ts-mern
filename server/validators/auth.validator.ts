@@ -18,6 +18,19 @@ class AuthValidator {
 
     return _schema.validate(data, { abortEarly: false });
   }
+
+  /**
+   * @param  {object} data
+   * @return {ValidationResult}
+   */
+  public loginValidation(data: object): ValidationResult {
+    const _schema = Joi.object({
+      userName: Joi.string().required(),
+      email: Joi.string().email().required(),
+    });
+
+    return _schema.validate(data, { abortEarly: false });
+  }
 }
 
 export default AuthValidator;

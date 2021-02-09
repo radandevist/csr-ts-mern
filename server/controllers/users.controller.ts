@@ -31,6 +31,38 @@ class UsersController {
       responder.send(res);
     }
   }
+
+  /**
+   * @param  {Request} req
+   * @param  {Response} res
+   * @return {void}
+   */
+  public async userBoard(req: Request, res: Response): Promise<void> {
+    try {
+      responder.success(200, "This is the user board", { user: req.user });
+
+      responder.send(res);
+    } catch (err) {
+      responder.error(400, err.message);
+      responder.send(res);
+    }
+  }
+
+  /**
+   * @param  {Request} req
+   * @param  {Response} res
+   * @return {void}
+   */
+  public async moderatorBoard(req: Request, res: Response): Promise<void> {
+    try {
+      responder.success(200, "This is the moderators board");
+
+      responder.send(res);
+    } catch (err) {
+      responder.error(400, err.message);
+      responder.send(res);
+    }
+  }
 }
 
 export default UsersController;
