@@ -68,8 +68,9 @@ class MainApp {
 
   /**
    * Connection to  mongodb
+   * and other initial documents setup
    */
-  private mongoDatabase(): void {
+  private async mongoDatabase(): Promise<void> {
     try {
       mongoose.connect(
           this.mongoUri,
@@ -88,7 +89,7 @@ class MainApp {
       // eslint-disable-next-line max-len
       const primitiveRoles: Array<PrimitiveRoles> = ["user", "moderator", "admin"];
       for (const role of primitiveRoles) {
-        (!Roles.findOne({ name: role })) ? Roles.create({ name: role }) : {};
+        if (!await Roles.findOne({ name: role })) Roles.create({ name: role });
       }
       console.info("Primitives roles set");
     } catch (err) {
