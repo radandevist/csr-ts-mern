@@ -3,7 +3,7 @@ import mongoose, { Document, Model, Schema, SchemaOptions } from "mongoose";
 export interface IUsers extends Document {
   userName: string,
   email: string,
-  roleID: string,
+  roleID: Schema.Types.ObjectId,
 };
 
 export interface IUsersModel {};// ? what is this?
