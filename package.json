@@ -40,7 +40,7 @@
     "helmet": "^4.4.1",
     "joi": "^17.3.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.11.13",
+    "mongoose": "^5.11.15",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-hot-loader": "^4.13.0",
