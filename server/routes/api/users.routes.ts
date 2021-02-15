@@ -27,6 +27,7 @@ class UserRoutes {
     this.userBoard();
     this.moderatorBoard();
     this.adminBoard();
+    this.deleteByID();
     // this.create();
     // this.getOne();
     // this.update();
@@ -94,6 +95,18 @@ class UserRoutes {
         authController.verifyToken,
         authController.isAdmin,
         usersController.adminBoard,
+    );
+  }
+
+  /**
+   * @return {void}
+   */
+  private deleteByID(): void {
+    this.router.delete(
+        "/:id",
+        authController.verifyToken,
+        authController.isAdmin,
+        usersController.deleteByID,
     );
   }
 }
