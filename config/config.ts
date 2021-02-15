@@ -15,6 +15,11 @@ const config = {
     cookieName: "csr_ts_mern_token",
     cookieMaxAge: 24 * 60 * 60 * 1000, // 24h in milliseconds
   },
+  siteAdmin: {
+    name: "superadmin",
+    email: "superadmin@gmail.com",
+    password: process.env.ADMIN_PASS || "1234567",
+  },
 };
 
 export default config;

@@ -5,15 +5,18 @@ import cookieParser from "cookie-parser";
 import compress from "compression";
 import cors from "cors";
 import helmet from "helmet";
+import bcrypt from "bcryptjs";
 import config from "../config/config";
 import ApiRoutes from "./routes/api";
 import ClientRoutes from "./routes/client";
 import devBundle from "./devBundle";// ! comment out this line in production
-import RolesModel, { PrimitiveRoles } from "./models/roles.model";
+import RolesModel, { PrimitiveRoles, IRoles } from "./models/roles.model";
+import UsersModel from "./models/users.model";
 
 const CWD = process.cwd(); // current working directory
 
 const Roles = RolesModel.getModel();
+const Users = UsersModel.getModel();
 
 /**
  * Main Application class
@@ -84,17 +87,53 @@ class MainApp {
 
       // initial
       // set essential documents collection
-      // ======
-      // set the primitive roles
-      // eslint-disable-next-line max-len
-      const primitiveRoles: Array<PrimitiveRoles> = ["user", "moderator", "admin"];
-      for (const role of primitiveRoles) {
-        if (!await Roles.findOne({ name: role })) Roles.create({ name: role });
-      }
+      await this.createPrimitiveRoles();
       console.info("Primitives roles set");
+      await this.createParentAdmin();
+      console.info("admin parent created");
     } catch (err) {
       console.error(`A database error connection occured:\n${err}`);
     }
+  }
+
+  /**
+   * set the primitive roles
+   * @return {Promise<void>}
+   */
+  private async createPrimitiveRoles(): Promise<void> {
+    const primitiveRoles: Array<PrimitiveRoles> =
+        ["user", "moderator", "admin"];
+
+    for (const role of primitiveRoles) {
+      if (!await Roles.findOne({ name: role })) Roles.create({ name: role });
+    }
+  }
+
+  /**
+   * set the first administrator
+   * @return {Promise<void>}
+   */
+  public async createParentAdmin(): Promise<void> {
+    let foundRole: IRoles;
+    do {
+      foundRole = await Roles.findOne({ name: "admin" });
+    } while (!foundRole);
+    // console.log(foundRole);
+
+    const { name: userName, email, password } = config.siteAdmin;
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPass = await bcrypt.hash(password, salt);
+
+    if (!await Users.findOne({ email })) {
+      const toCreate = {
+        userName,
+        email,
+        password: hashedPass,
+        roleID: foundRole._id,
+      };
+      await Users.create(toCreate);
+    };
   }
 
   /**
