@@ -1,46 +1,46 @@
-/* eslint-disable */
-'use strict';
-const path = require('path');
-const webpack = require('webpack');
-const merge = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const common = require('./webpack.common');
+"use strict";
+
+const path = require("path");
+const webpack = require("webpack");
+const { merge } = require("webpack-merge");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const common = require("./webpack.common");
 
 const CURRENT_WORKING_DIR = process.cwd();
 
 module.exports = merge(common, {
-  mode: 'development',
+  mode: "development",
   entry: [
-    'webpack-hot-middleware/client?reload=true',
-    path.join(CURRENT_WORKING_DIR, 'client/app/index.tsx')
+    "webpack-hot-middleware/client?reload=true",
+    path.join(CURRENT_WORKING_DIR, "client/app/index.tsx"),
   ],
   output: {
-    path: path.join(CURRENT_WORKING_DIR, '/dist/client'),
-    filename: 'js/[name].js',
-    publicPath: '/',
+    path: path.join(CURRENT_WORKING_DIR, "/dist/client"),
+    filename: "js/[name].js",
+    publicPath: "/",
   },
-  devtool: 'eval-cheap-module-source-map',
+  devtool: "eval-cheap-module-source-map",
   module: {
     rules: [
       {
         test: /\.(scss|sass)$/,
         exclude: /\.module\.(sa|sc)ss$/,
         use: [
-          'style-loader',
+          "style-loader",
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               sourceMap: true,
             },
           },
           {
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
               sourceMap: true,
             },
           },
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
             options: {
               sourceMap: true,
             },
@@ -51,15 +51,15 @@ module.exports = merge(common, {
         test: /\.css$/,
         exclude: /\.module.css$/,
         use: [
-          'style-loader',
+          "style-loader",
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
               sourceMap: true,
             },
           },
           {
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
               sourceMap: true,
             },
@@ -69,40 +69,40 @@ module.exports = merge(common, {
       {
         test: /\.module\.(sa|sc|c)ss$/,
         use: [
-          'style-loader',
+          "style-loader",
           {
-            loader: 'css-loader',
+            loader: "css-loader",
             options: {
-            modules: {
+              modules: {
               // namedExport: true,
-              exportLocalsConvention: "camelCase",
-              localIdentName: '[path][name]__[local]',
+                exportLocalsConvention: "camelCase",
+                localIdentName: "[path][name]__[local]",
+              },
+              sourceMap: true,
             },
-            sourceMap: true,
-            }
           },
           {
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
               sourceMap: true,
             },
           },
           {
-            loader: 'sass-loader',
+            loader: "sass-loader",
             options: {
               sourceMap: true,
             },
           },
-        ]
+        ],
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|ico)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              outputPath: 'images',
-              name: '[name].[ext]',
+              outputPath: "images",
+              name: "[name].[ext]",
             },
           },
         ],
@@ -111,10 +111,10 @@ module.exports = merge(common, {
         test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
-              outputPath: 'fonts',
-              name: '[name].[ext]',
+              outputPath: "fonts",
+              name: "[name].[ext]",
             },
           },
         ],
@@ -123,7 +123,7 @@ module.exports = merge(common, {
         test: /\.html$/,
         use: [
           {
-            loader: 'html-loader',
+            loader: "html-loader",
           },
         ],
       },
@@ -131,25 +131,25 @@ module.exports = merge(common, {
   },
   resolve: {
     extensions: [
-      '.ts',
-      '.tsx',
-      '.js',
-      '.json',
-      '.css',
-      '.scss',
-      '.less',
-      '.html',
+      ".ts",
+      ".tsx",
+      ".js",
+      ".json",
+      ".css",
+      ".scss",
+      ".less",
+      ".html",
     ],
     alias: {
-      'react-dom': '@hot-loader/react-dom'
+      "react-dom": "@hot-loader/react-dom",
     },
   },
   plugins: [
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({
-      template: path.join(CURRENT_WORKING_DIR, 'client/public/index.html'),
+      template: path.join(CURRENT_WORKING_DIR, "client/public/index.html"),
       inject: true,
     }),
-  ]
+  ],
 });
