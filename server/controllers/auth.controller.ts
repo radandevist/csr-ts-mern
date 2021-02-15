@@ -16,10 +16,38 @@ const authValidator = new AuthValidator();
 const authService = new AuthService();
 const responder = new Responder();
 
+const cookieName = config.jwt.cookieName;
+
 /**
  * AuthController
  */
 class AuthController {
+  /**
+   * @param {IUsers} user
+   * @return {string}
+   */
+  private static createToken(user: IUsers): string {
+    const payload = { _id: user._id };
+    const signOptions: SignOptions = {
+      algorithm: "HS256",
+      expiresIn: config.jwt.tokenLife,
+    };
+    return jwt.sign(payload, config.jwt.secret, signOptions);
+  }
+
+  /**
+   * @param  {Response} res
+   * @param  {string} token
+   * @return {void}
+   */
+  private static setTokenCookie(res: Response, token: string): void {
+    const nowDate: Date = new Date();
+    res.cookie(cookieName, token, {
+      // expires one day from its activation
+      expires: new Date(nowDate.getTime() + config.jwt.cookieMaxAge),
+    });
+  }
+
   /**
    * @param  {Request} req
    * @param  {Response} res
@@ -93,8 +121,8 @@ class AuthController {
         return responder.send(res);
       }
 
-      const token = this.createToken(foundUser);
-      this.setTokenCookie(res, token);
+      const token = AuthController.createToken(foundUser);
+      AuthController.setTokenCookie(res, token);
 
       const toDisplay = {
         _id: foundUser._id,
@@ -112,32 +140,6 @@ class AuthController {
   }
 
   /**
-   * @param {IUsers} user
-   * @return {string}
-   */
-  private createToken(user: IUsers): string {
-    const payload = { _id: user._id };
-    const signOptions: SignOptions = {
-      algorithm: "HS256",
-      expiresIn: config.jwt.tokenLife,
-    };
-    return jwt.sign(payload, config.jwt.secret, signOptions);
-  }
-
-  /**
-   * @param  {Response} res
-   * @param  {string} token
-   * @return {void}
-   */
-  private setTokenCookie(res: Response, token: string): void {
-    const nowDate: Date = new Date();
-    res.cookie("access_token", token, {
-      // expires one day from its activation
-      expires: new Date(nowDate.getTime() + config.jwt.cookieMaxAge),
-    });
-  }
-
-  /**
    * @param  {Request} req
    * @param  {Response} res
    * @return {Promise<any>}
@@ -146,7 +148,7 @@ class AuthController {
       Promise<any> {
     try {
       delete req.user;
-      res.clearCookie("access_token");
+      res.clearCookie(cookieName);
 
       responder.success(200, "you are logged out");
       responder.send(res);
@@ -165,7 +167,7 @@ class AuthController {
   public async verifyToken(req: Request, res: Response, next: NextFunction):
   Promise<any> {
     try {
-      const token = req.cookies.access_token;
+      const token = req.cookies[cookieName];
 
       if (!token) {// there is no token provided
         responder.error(401, "access denied, you need to login");
