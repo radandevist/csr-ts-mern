@@ -80,12 +80,19 @@ Althought, you're free to use any mongo host or any database management system a
 
 ## Todo next:
 
-[ ] Remove the unused dependencies.
+* [x] Remove the unused dependencies.
 
-[x] Connection to database.
+* [x] Connection to database.
 
-[ ] functionning CRUD Api routes with Authentication and role based authorizations
+* [X] functionning CRUD Api routes with Authentication and role based authorizations
 
-<!-- [ ] A file containing the frontend routes shared both by express router and react router -->
+* [ ] add authors field in tutorials model
 
-[ ] idk
+* [ ]  detailed authorization:
+  * [ ]  only admin can delete user and update role
+  * [ ]  admins can also create users
+  * [ ]  moderators and admins can unpublish tutorial
+  * [ ]  only user can update his email and username
+
+* [ ]  generate api-docs using swagger-ui
+* [ ]  revise all status code responses in the appe case
