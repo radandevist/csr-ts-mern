@@ -1,7 +1,7 @@
 {
-  "name": "csr-ts-mern",
+  "name": "mern-mono-ts",
   "version": "1.0.0",
-  "description": "A MERN Stack boilerplate using typescript and webpack wiht client-side rendered react",
+  "description": "A MERN Stack boilerplate using typescript and webpack where the client and server are in a single repo",
   "author": "Andrianarisoa Daniel",
   "license": "MIT",
   "keywords": [
