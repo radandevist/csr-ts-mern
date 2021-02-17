@@ -1,6 +1,10 @@
-# Radan's MERN boilerplate #1 (client-side rendered)
+# mern-mono-ts
 
-This is a MERN boilerplate which uses typescript and webpack.  The resulting react app will be client-side rendered.
+This is a MERN boilerplate which uses typescript and webpack.
+
+server and client are packed together int a single repo.
+
+The resulting react app will be client-side rendered.
 
 ## features:
 
