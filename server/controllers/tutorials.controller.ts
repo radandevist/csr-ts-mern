@@ -44,7 +44,7 @@ class TutorialsController {
   public async getByID(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id;
-      const tutFound: ITutorials = await Tutorials.findById(id);
+      const tutFound: ITutorials = await Tutorials.findById(id) as ITutorials;
 
       if (tutFound) {
         responder.success(200, "toutorial found", tutFound);
@@ -120,7 +120,7 @@ class TutorialsController {
   public async updateByID(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id;
-      const foundTut: ITutorials = await Tutorials.findById(id);
+      const foundTut: ITutorials = await Tutorials.findById(id) as ITutorials;
 
       if (foundTut) {
         // * validation
@@ -129,7 +129,8 @@ class TutorialsController {
 
         if (!validationError) {
           const log = await Tutorials.updateOne({ _id: id }, value);
-          const updatedTut: ITutorials = await Tutorials.findById(id);
+          const updatedTut: ITutorials =
+              await Tutorials.findById(id) as ITutorials;
 
           const data = {
             updatedTut: updatedTut,
@@ -159,7 +160,8 @@ class TutorialsController {
   public async deleteByID(req: Request, res: Response): Promise<void> {
     try {
       const id = req.params.id;
-      const tutFound: ITutorials = await Tutorials.findById(req.params.id);
+      const tutFound: ITutorials =
+          await Tutorials.findById(req.params.id) as ITutorials;
 
       if (tutFound) {
         const log = await Tutorials.deleteOne({ _id: id });
