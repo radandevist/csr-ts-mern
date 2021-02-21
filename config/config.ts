@@ -7,7 +7,7 @@ const config = {
     mongoUri:
         process.env.MONGODB_URI ||
         process.env.MONGO_HOST ||
-        `mongodb://${process.env.IP || "localhost"}:${process.env.MONGO_PORT || "27017"}/${process.env.DB_NAME || "csr-ts-mern"}`,
+        `mongodb://${process.env.IP || "localhost"}:${process.env.MONGO_PORT || "27017"}/${process.env.DB_NAME || "mern-mono-ts"}`,
   },
   jwt: {
     secret: process.env.JWT_SECRET || "your-secret-key",
