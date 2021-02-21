@@ -75,7 +75,7 @@ class MainApp {
    */
   private async mongoDatabase(): Promise<void> {
     try {
-      mongoose.connect(
+      await mongoose.connect(
           this.mongoUri,
           {
             useNewUrlParser: true,
@@ -89,10 +89,11 @@ class MainApp {
       // set essential documents collection
       await this.createPrimitiveRoles();
       console.info("Primitives roles set");
+
       await this.createParentAdmin();
       console.info("admin parent created");
     } catch (err) {
-      console.error(`A database error connection occured:\n${err}`);
+      console.error(`An error with the database occured:\n${err}`);
     }
   }
 
@@ -118,7 +119,6 @@ class MainApp {
     do {
       foundRole = await Roles.findOne({ name: "admin" }) as IRoles;
     } while (!foundRole);
-    // console.log(foundRole);
 
     const { name: userName, email, password } = config.siteAdmin;
 

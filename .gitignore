@@ -1,4 +1,4 @@
 node_modules
 dist
 config/sensitive.ts
-.fakeEnv
+.env
