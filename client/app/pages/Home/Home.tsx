@@ -2,8 +2,8 @@ import React from "react";
 import useStyles from "./Home.style";
 import { Card, Typography, CardMedia, CardContent } from "@material-ui/core";
 import { Link } from "react-router-dom";
-// eslint-disable-next-line max-len
-import unicornImage from "../../../public/images/meritt-thomas-KTYjVDmN4A4-unsplash.jpg";
+import unicornImage
+  from "../../assets/images/meritt-thomas-KTYjVDmN4A4-unsplash.jpg";
 
 // type HomeProps = {}
 
