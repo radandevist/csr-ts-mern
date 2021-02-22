@@ -18,6 +18,7 @@
   "main": "./dist/server/server.bundle.js",
   "scripts": {
     "dev": "yarn dev:serve:watch",
+    "clean": "rimraf dist",
     "build": "yarn prod:build:client && yarn prod:build:server",
     "start": "NODE_ENV=production yarn start:server",
     "start:server": "node dist/server/server.bundle.js",
@@ -92,6 +93,7 @@
     "postcss-loader": "^4.1.0",
     "postcss-normalize": "^9.0.0",
     "postcss-preset-env": "^6.7.0",
+    "rimraf": "^3.0.2",
     "sass": "^1.32.4",
     "sass-loader": "^10.1.1",
     "style-loader": "^2.0.0",
