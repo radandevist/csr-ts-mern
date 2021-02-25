@@ -102,7 +102,7 @@ You can specify aliases for paths in `tsconfig.json > compilerOptions > paths`.
   * public: for static files not being used during build process, its content will be copied in `dist/client`.
 * server: server codes
   * assets: static assets for our app that will be processed during build. (e.g. images, fonts, etc...)
-* config: all config related to our app files are stored here
+* config: all config files related to our app are stored here
 
 ## Todo next:
 
