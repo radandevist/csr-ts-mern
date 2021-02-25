@@ -6,10 +6,10 @@ import compress from "compression";
 import cors from "cors";
 import helmet from "helmet";
 import bcrypt from "bcryptjs";
-import config from "../config/config";
+import config from "@config/config";
 import ApiRoutes from "./routes/api";
 import ClientRoutes from "./routes/client";
-import devBundle from "./devBundle";// ! comment out this line in production
+// import devBundle from "./devBundle";// ! comment out this line in production
 import RolesModel, { PrimitiveRoles, IRoles } from "./models/roles.model";
 import UsersModel from "./models/users.model";
 
@@ -28,8 +28,6 @@ class MainApp {
 
   private mongoUri: string = config.db.mongoUri;
 
-  // private mongoUri: string = config.database.mongodb.url.dev;
-
   // eslint-disable-next-line require-jsdoc
   constructor() {
     this.mongoDatabase();
@@ -44,7 +42,7 @@ class MainApp {
    */
   private middlewares(): void {
     // Bundle the client code
-    devBundle.compile(this.app);// ! comment out this line in production
+    // devBundle.compile(this.app);// ! comment out this line in production
 
     // enable serving static files
     this.app.use("/", express.static(path.join(CWD, "dist/client")));

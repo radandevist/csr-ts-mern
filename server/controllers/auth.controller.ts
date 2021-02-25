@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import jwt, { SignOptions } from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import config from "../../config/config";
+import config from "@config/config";
 import { getValidationErrorMessages } from "../helpers/errorHandlers";
 import Responder from "../helpers/responder";
 import RolesModel, { IRoles } from "../models/roles.model";

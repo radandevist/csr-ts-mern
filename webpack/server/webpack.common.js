@@ -1,18 +1,20 @@
-/* eslint-disable */
-'use strict';
-const path = require('path');
+"use strict";
 
-const CURRENT_WORKING_DIR = process.cwd();
+const path = require("path");
+const TsconfigPathsPlugin = require("tsconfig-paths-webpack-plugin");
+
+const CWD = process.cwd();
 
 module.exports = {
   output: {
-    path: path.join(CURRENT_WORKING_DIR, '/dist/server'),
-    filename: 'server.bundle.js',
+    path: path.join(CWD, "/dist/server"),
+    filename: "server.bundle.js",
   },
   resolve: {
-    extensions: ['.ts', '.tsx', '.js', '.json'],
+    plugins: [new TsconfigPathsPlugin()],
+    extensions: [".ts", ".tsx", ".js", ".json"],
   },
-  target: 'node',
+  target: "node",
   node: {
     __dirname: false,
     __filename: false,
@@ -21,14 +23,14 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        use: ['babel-loader'],
+        use: ["babel-loader"],
         exclude: /node_modules/,
       },
       {
         test: /\.tsx?$/,
         use: [
           {
-            loader: 'ts-loader',
+            loader: "ts-loader",
             options: {
               transpileOnly: true,
             },

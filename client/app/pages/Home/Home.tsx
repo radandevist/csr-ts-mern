@@ -3,7 +3,7 @@ import useStyles from "./Home.style";
 import { Card, Typography, CardMedia, CardContent } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import unicornImage
-  from "../../assets/images/meritt-thomas-KTYjVDmN4A4-unsplash.jpg";
+  from "@images/meritt-thomas-KTYjVDmN4A4-unsplash.jpg";
 
 // type HomeProps = {}
 
