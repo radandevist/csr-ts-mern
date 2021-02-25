@@ -1,23 +1,27 @@
-/* eslint-disable */
-'use strict';
+"use strict";
+
+const path = require("path");
+const { FileManagerPlugin } = require("@rogalski/webpack-file-manager");
+
+const CWD = process.cwd();
 
 module.exports = {
-  target: 'web',
+  target: "web",
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel-loader',
+        loader: "babel-loader",
         exclude: /(node_modules)/,
       },
       {
         test: /\.tsx?$/,
         use: [
           {
-            loader: 'babel-loader',
+            loader: "babel-loader",
           },
           {
-            loader: 'ts-loader',
+            loader: "ts-loader",
             options: {
               transpileOnly: true,
             },
@@ -27,4 +31,10 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    new FileManagerPlugin().copy(
+        path.join(CWD, "/client/public"),
+        path.join(CWD, "/dist/client"),
+    ),
+  ],
 };
