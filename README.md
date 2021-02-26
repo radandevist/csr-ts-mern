@@ -1,12 +1,10 @@
 # mern-mono-ts
 
 This is a MERN boilerplate which uses typescript and webpack.
-
-server and client are packed together int a single repo.
-
+Server and client are packed together int a single repo.
 The resulting react app will be client-side rendered.
 
-## features:
+## :information_source: features:
 
 * Typescript
 * webpack
@@ -17,14 +15,12 @@ The resulting react app will be client-side rendered.
 * Hot module replacement while developing on the client-side
 * Server reload thanks to [nodemon-webpack-plugin](https://www.npmjs.com/package/nodemon-webpack-plugin) while developing on the server-side
 
-## Usage:
+## :notebook: Usage:
 
-* prerequisites:
+### :toolbox: prerequisites:
+To run this boilerplate you'll need **Node**, **MongoDB** and **yarn** installed on your machine.
 
-  * Node
-  * MongoDB
-
-* development:
+### :wrench: development:
 
   * uncomment the following lines of code in `server/index.ts`: 
     ```typescript
@@ -35,7 +31,7 @@ The resulting react app will be client-side rendered.
 
   * hit `npm run dev` to start developing.
 
-* production
+### :outbox_tray: production
   
   * comment out the previously specified lines in `server/index.ts`: 
     ```typescript
@@ -50,7 +46,7 @@ The resulting react app will be client-side rendered.
 
   * open a browser at http://localhost:{port}; **port** is specified in `config/config.ts`
 
-## Resources used:
+## :page_facing_up: Resources used:
 
 For implementing this boilerplate, I mainly took inspiration from the following sources:
 
@@ -59,22 +55,70 @@ For implementing this boilerplate, I mainly took inspiration from the following 
 * [mern-boilerplate](https://github.com/mohamedsamara/mern-boilerplate) by [
 Mohamed Samara](https://github.com/mohamedsamara)
 
-## Notes:
+## :notebook: Notes:
 
-### :green_circle: about css/sass/css modules:
+### :label: create and use css/sass/scss modules:
 
-As a covention, css/sass/scss modules are prefixed by `.module.(css|sass|scss)` extension. and for typescript needs we must add a corresponding declaration file. i.e. : if i create a css module named `foo.module.css` thus a file named `foo.module.css.d.ts` have to be created also (same logic for sass and scss).
+Classes defined in css/sass/scss modules using kebab-case (words separated by hyphens) or snake_case (words separated by underscore) are exported as camelCase.
 
-### :green_circle: creating a new page/view (client):
+1- create our module and create some classes in it:
 
-* create the react component of your new page
+As a covention, css/sass/scss modules are prefixed by `.module.(css|sass|scss)` extension;
 
-* insert a new `ClientRoute` instance in `clientRoutes` array inside `client/app/routes.ts`. This one is for react routing on the client-side.
+```css
+// style.module.css
 
-* insert the new page's path (a string) in the `clientRoutes` array inside `server/routes/react/routes.ts`. This one is for the express routing on the server. Otherwise, express will not recognize your page's path and will throw you an error which will tell you it can't get that url.
+.regular{/* ... */}
+
+.class-zero{/* ... */}
+
+.my_class {/* ... */}
+```
+
+2- Create a module declaration file in the same folder to make it recognized by typescript:
+
+```typescript
+// style.module.css.d.ts
+
+declare const styles: {
+  regular: string;
+  classZero: string;
+  myClass: string;
+};
+
+export = styles;
+```
+:warning: remark that the declaration file name is exactly the same as the css module file name (including the extensions) with `.d.ts` extension at the end.
+
+:warning: notice also that css classes using snake case (".class-zero") or kebab case (".my_class") typo have to be declared in camelcase in the decalration file.
+
+3- Import and use our css/sass/scss module:
+
+```typescript
+// random-file.tsx
+
+import css from "./style.module.css";
+
+const FunctionComp = () => (
+  <>
+    <Comp0 className={css.regular} />
+    <Comp1 className={css.classZero} />
+    <Comp2 className={css.myClass} />
+  </>
+);
+```
+:warning: notice that css classes using snake case (".class-zero") or kebab case (".my_class") typo have to be called in camelcase.
+
+### :label: creating a new page/view (client):
+
+1-  create the react component of your new page
+
+2- insert a new `ClientRoute` instance in `clientRoutes` array inside `client/app/routes.ts`. This one is for react routing on the client-side.
+
+3- insert the new page's path (a string) in the `clientRoutes` array inside `server/routes/react/routes.ts`. This one is for the express routing on the server. Otherwise, express will not recognize your page's path and will throw you an error which will tell you it can't get that url.
 Make sure that it matches the path you entered in `client/app/routes.ts` previously.
 
-### :green_circle: connecting to mongodb:
+### :label: connecting to mongodb:
 
 You will need **MongoDB** installed on your machine for local development.
 
@@ -82,20 +126,20 @@ The mongo uri in our [config file](https://github.com/radandevist/csr-ts-mern/bl
 
 Althought, you're free to use any mongo host or any database management system also.
 
-### :green_circle: about path aliases:
+### :label: about path aliases:
 
-Path aliases avoid us to relative paths import burden; e.g. instead of doins such import `import { SomeModule } from "../../../some-module"` specify a path alias and just import the needed module from that alias: `import { SomeModule } from "@alias/some-module"`.
+Path aliases avoid us to relative paths import burden; e.g. instead of doing such import `import { SomeModule } from "../../../some-module"` specify a path alias and just import the needed module from that alias: `import { SomeModule } from "@alias/some-module"`.
 Actually, i've configured the following aliases:
  * "@client/*" pointing at `client/app/`
  * "@server/*" pointing at `server/`
  * "@config/*" pointing at `config/`
  * "@images/*" pointing at `client/app/assets/images/`
 
-Under the hood we are making use of [tsconfig-paths-webpack-plugin](https://www.npmjs.com/package/tsconfig-paths-webpack-plugin) in order to make webpack understand our aliases.
 
 You can specify aliases for paths in `tsconfig.json > compilerOptions > paths`.
 
-### :green_circle: brief folder structure explanation:
+Under the hood we are making use of [tsconfig-paths-webpack-plugin](https://www.npmjs.com/package/tsconfig-paths-webpack-plugin) in order to make webpack understand our aliases.
+### :label: brief folder structure explanation:
 
 * client: client codes
   * app: all react codes goes here
@@ -104,7 +148,7 @@ You can specify aliases for paths in `tsconfig.json > compilerOptions > paths`.
   * assets: static assets for our app that will be processed during build. (e.g. images, fonts, etc...)
 * config: all config files related to our app are stored here
 
-## Todo next:
+## :checkered_flag: Todo next:
 
 * [x] Remove the unused dependencies.
 
