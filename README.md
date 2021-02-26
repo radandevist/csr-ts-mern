@@ -90,7 +90,7 @@ export = styles;
 ```
 :warning: remark that the declaration file name is exactly the same as the css module file name (including the extensions) with `.d.ts` extension at the end.
 
-:warning: notice also that css classes using snake case (".class-zero") or kebab case (".my_class") typo have to be declared in camelcase in the decalration file.
+:warning: notice also that css classes using snake case (".my_class") or kebab case (".class-zero") typo have to be declared in camelcase in the decalration file.
 
 3- Import and use our css/sass/scss module:
 
@@ -107,7 +107,7 @@ const FunctionComp = () => (
   </>
 );
 ```
-:warning: notice that css classes using snake case (".class-zero") or kebab case (".my_class") typo have to be called in camelcase.
+:warning: notice that css classes using snake case (".my_class") or kebab case (".class-zero") typo have to be called in camelcase.
 
 ### :label: creating a new page/view (client):
 
