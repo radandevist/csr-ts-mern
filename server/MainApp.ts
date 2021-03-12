@@ -105,7 +105,7 @@ class MainApp {
 
     for (const role of primitiveRoles) {
       if (!await Roles.findOne({ name: role })) {
-        Roles.create({ name: role });
+        await Roles.create({ name: role });
       }
     }
   }
