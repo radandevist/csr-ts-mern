@@ -56,7 +56,6 @@
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",
-    "@material-ui/types": "^5.1.0",
     "@rogalski/webpack-file-manager": "^1.0.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/compression": "^1.7.0",
