@@ -7,7 +7,7 @@ import { Link as ReactLink } from "react-router-dom";
 
 const Home = (): JSX.Element => {
   return (
-    <Box>
+    <Box className={["block", "bg-blue-500"].join(" ")}>
       <Text fontSize="5xl" color="whatsapp.500">Hey There!!</Text>
       <Text fontSize="lg">
         Just Switched to chakra-ui and react tailwind css!!
