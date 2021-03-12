@@ -89,7 +89,7 @@ class MainApp {
       console.info("Primitives roles set");
 
       await this.createParentAdmin();
-      console.info("admin parent created");
+      console.info("Admin parent created");
     } catch (err) {
       console.error(`An error with the database occured:\n${err}`);
     }
@@ -104,7 +104,9 @@ class MainApp {
         ["user", "moderator", "admin"];
 
     for (const role of primitiveRoles) {
-      if (!await Roles.findOne({ name: role })) Roles.create({ name: role });
+      if (!await Roles.findOne({ name: role })) {
+        Roles.create({ name: role });
+      }
     }
   }
 
@@ -113,10 +115,7 @@ class MainApp {
    * @return {Promise<void>}
    */
   public async createParentAdmin(): Promise<void> {
-    let foundRole: IRoles;
-    do {
-      foundRole = await Roles.findOne({ name: "admin" }) as IRoles;
-    } while (!foundRole);
+    const foundRole = await Roles.findOne({ name: "admin" }) as IRoles;
 
     const { name: userName, email, password } = config.siteAdmin;
 
@@ -136,7 +135,6 @@ class MainApp {
 
   /**
    * Serve this application
-   * @param  {MainApp} mainApp
    */
   public serve():void {
     this.app.listen(
