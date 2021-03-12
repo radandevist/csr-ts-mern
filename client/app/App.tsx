@@ -1,9 +1,10 @@
 import React from "react";
 import { hot } from "react-hot-loader";
-import { ThemeProvider } from "@material-ui/core/styles";
+// import { ThemeProvider } from "@material-ui/core/styles";
+import { ChakraProvider } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 import MainRouter from "./MainRouter";
-import theme from "./theme";
+// import theme from "./theme";
 
 import "./App.css";
 import "./App.scss";
@@ -11,11 +12,13 @@ import "./App.scss";
 const App = () => {
   return (
     <>
-      <BrowserRouter>
-        <ThemeProvider theme={theme}>
+      <ChakraProvider>
+        {/* <ThemeProvider theme={theme}> */}
+        <BrowserRouter>
           <MainRouter/>
-        </ThemeProvider>
-      </BrowserRouter>
+        </BrowserRouter>
+        {/* </ThemeProvider> */}
+      </ChakraProvider>
     </>
   );
 };
