@@ -22,7 +22,7 @@
     "build": "yarn prod:build:client && yarn prod:build:server",
     "start": "NODE_ENV=production yarn start:server",
     "start:server": "node dist/server/server.bundle.js",
-    "dev:serve:watch": "webpack --watch --config=./webpack/server/webpack.dev.js",
+    "dev:serve:watch": "webpack --color --watch --config=./webpack/server/webpack.dev.js",
     "dev:build:server": "webpack --config=./webpack/server/webpack.dev.js",
     "dev:build:client": "webpack --config=./webpack/client/webpack.dev.js",
     "dev:start:server": "yarn dev:build:server && yarn start:server",
