@@ -10,7 +10,7 @@ import config from "@config/config";
 import ApiRoutes from "./routes/api";
 import ClientRoutes from "./routes/client";
 // import devBundle from "./devBundle";// ! comment out this line in production
-import RolesModel, { PrimitiveRoles, IRoles } from "./models/roles.model";
+import RolesModel, { IRoles } from "./models/roles.model";
 import UsersModel from "./models/users.model";
 
 const CWD = process.cwd(); // current working directory
@@ -101,7 +101,7 @@ class MainApp {
    */
   private async createPrimitiveRoles(): Promise<void> {
     const primitiveRoles: Array<PrimitiveRoles> =
-        ["user", "moderator", "admin"];
+          config.primitiveRoles as PrimitiveRoles[];
 
     for (const role of primitiveRoles) {
       if (!await Roles.findOne({ name: role })) {
