@@ -16,8 +16,8 @@ const config = {
     cookieMaxAge: 24 * 60 * 60 * 1000, // 24h in milliseconds
   },
   siteAdmin: {
-    name: "superadmin",
-    email: "superadmin@gmail.com",
+    name: process.env.ADMIN_NAME || "superadmin",
+    email: process.env.ADMIN_EMAIL || "superadmin@gmail.com",
     password: process.env.ADMIN_PASS || "1234567",
   },
 };
