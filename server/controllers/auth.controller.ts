@@ -23,32 +23,6 @@ const cookieName = config.jwt.cookieName;
  */
 class AuthController {
   /**
-   * @param {IUsers} user
-   * @return {string}
-   */
-  private static createToken(user: IUsers): string {
-    const payload = { _id: user._id };
-    const signOptions: SignOptions = {
-      algorithm: "HS256",
-      expiresIn: config.jwt.tokenLife,
-    };
-    return jwt.sign(payload, config.jwt.secret, signOptions);
-  }
-
-  /**
-   * @param  {Response} res
-   * @param  {string} token
-   * @return {void}
-   */
-  private static setTokenCookie(res: Response, token: string): void {
-    const nowDate: Date = new Date();
-    res.cookie(cookieName, token, {
-      // expires one day from its activation
-      expires: new Date(nowDate.getTime() + config.jwt.cookieMaxAge),
-    });
-  }
-
-  /**
    * @param  {Request} req
    * @param  {Response} res
    * @return {Promise<any>}
@@ -62,24 +36,24 @@ class AuthController {
           authValidator.registerValidation(newUser);
 
       if (validationError) {
-        responder.error(400, getValidationErrorMessages(validationError));
+        responder.error(422, getValidationErrorMessages(validationError));
         return responder.send(res);
       }
 
       const userFound = await Users.findOne({ email: value.email });
 
       if (userFound) {
-        responder.error(400, "email address already in use");
+        responder.error(409, "email address already in use");
         return responder.send(res);
       }
 
       const roleFound: IRoles =
           await Roles.findOne({ name: value.role }) as IRoles;
 
-      if (!roleFound) {// * Something that should never happen but who knows?
-        responder.error(400, `role ${value.role} does not exists`);
-        return responder.send(res);
-      }
+      // if (!roleFound) {// * Something that should never happen but who knows?
+      //   responder.error(422, `role ${value.role} does not exists`);
+      //   return responder.send(res);
+      // }
 
       const data = await authService.register({ role: roleFound, value });
 
@@ -103,7 +77,7 @@ class AuthController {
           authValidator.loginValidation(req.body);
 
       if (validationError) {
-        responder.error(400, getValidationErrorMessages(validationError));
+        responder.error(422, getValidationErrorMessages(validationError));
         return responder.send(res);
       }
 
@@ -142,6 +116,32 @@ class AuthController {
   }
 
   /**
+   * @param {IUsers} user
+   * @return {string}
+   */
+  private static createToken(user: IUsers): string {
+    const payload = { _id: user._id };
+    const signOptions: SignOptions = {
+      algorithm: "HS256",
+      expiresIn: config.jwt.tokenLife,
+    };
+    return jwt.sign(payload, config.jwt.secret, signOptions);
+  }
+
+  /**
+   * @param  {Response} res
+   * @param  {string} token
+   * @return {void}
+   */
+  private static setTokenCookie(res: Response, token: string): void {
+    const nowDate: Date = new Date();
+    res.cookie(cookieName, token, {
+      // expires one day from its activation
+      expires: new Date(nowDate.getTime() + config.jwt.cookieMaxAge),
+    });
+  }
+
+  /**
    * @param  {Request} req
    * @param  {Response} res
    * @return {Promise<any>}
@@ -172,14 +172,14 @@ class AuthController {
       const token = req.cookies[cookieName];
 
       if (!token) {// there is no token provided
-        responder.error(401, "access denied, you need to login");
+        responder.error(403, "access denied, you need to login");
         return responder.send(res);
       }
 
       const verified = jwt.verify(token, config.jwt.secret);
 
       if (!verified) {
-        responder.error(400, "Invalid token");
+        responder.error(401, "invalid token");
         return responder.send(res);
       }
 

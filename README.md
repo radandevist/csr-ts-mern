@@ -152,7 +152,7 @@ Under the hood we are making use of [tsconfig-paths-webpack-plugin](https://www.
 
 * [x] Remove the unused dependencies.
 
-* [x] Connection to database.
+* [X] Connection to database.
 
 * [X] functionning CRUD Api routes with Authentication and role based authorizations
 
@@ -165,4 +165,4 @@ Under the hood we are making use of [tsconfig-paths-webpack-plugin](https://www.
   * [ ]  only user can update his email and username
 
 * [ ]  generate api-docs using swagger-ui
-* [ ]  revise all status code responses in the appe case
+* [X]  revise all status code responses in the appe case
