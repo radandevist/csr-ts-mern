@@ -1,17 +1,12 @@
-const postcsspresetenv = require("postcss-preset-env");
-const postcssnormalize = require("postcss-normalize");
-const autoprefixer = require("autoprefixer");
-const cssnano = require("cssnano");
-const tailwindcss = require("tailwindcss");
-
+/* eslint-disable */
 module.exports = (ctx) => {
   return {
-    plugins: [
-      postcsspresetenv({}),
-      autoprefixer({}),
-      postcssnormalize({}),
-      ...(ctx.env === "production" ? [cssnano({})] : []),
-      tailwindcss({}),
-    ],
+    plugins: {
+      "postcss-preset-env": {},
+      autoprefixer: {},
+      "postcss-normalize": {},
+      cssnano: (ctx.env == "production") ? {} : null,
+      tailwindcss: {},
+    }
   };
 };
